@@ -1,0 +1,9 @@
+{
+    "name": "socket-lab",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "express": "2.5.8",
+        "ws": ">= 0.4.11"
+    }
+}
