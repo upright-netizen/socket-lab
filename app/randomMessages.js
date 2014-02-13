@@ -1,31 +1,33 @@
-/*jshint laxcomma: true, asi: true */
+/*jshint laxcomma: true, asi: true, eqnull: true, browser: false */
+/*global console: false, exports: false, require: false */
 
 exports.init = function () {
+  'use strict';
 
   var WebSocket = require('ws')
-    , web_socket_server = WebSocket.Server
+    , Web_socket_server = WebSocket.Server
     , port = 4014
-    , testSocket = new web_socket_server({port : port})
+    , testSocket = new Web_socket_server({port : port})
     , timer
 
     , messages;
 
   messages = {
-    "time" : function timeMessage () {
+    'time' : function timeMessage () {
       var
         t = new Date(),
         hours = t.getHours(),
-        minutes = t.getMinutes() < 10 ? "0" + t.getMinutes() : t.getMinutes();
+        minutes = t.getMinutes() < 10 ? '0' + t.getMinutes() : t.getMinutes();
 
       return {
-        type : "time",
-        data : hours + ":" + minutes
+        type : 'time',
+        data : hours + ':' + minutes
       };
     },
 
-    "price-drop" : function priceDropMessage () {
+    'price-drop' : function priceDropMessage () {
       return {
-        type : "price-drop",
+        type : 'price-drop',
         data : {
           productId : 123129384,
           price : 123.24
@@ -33,30 +35,30 @@ exports.init = function () {
       }
     },
 
-    "inventory-status" : function inventoryStatusMessage () {
+    'inventory-status' : function inventoryStatusMessage () {
       return {
-        type : "inventory-status",
-        data : "coming soon"
+        type : 'inventory-status',
+        data : 'coming soon'
       };
     },
 
-    "number" : function numberMessage () {
+    'number' : function numberMessage () {
       return {
-        type : "number",
+        type : 'number',
         data : Math.floor(Math.random() * 100)
       };
     },
 
-    "date" : function dateMessage () {
+    'date' : function dateMessage () {
       return {
-        type : "date",
+        type : 'date',
         data : new Date()
       }
     }
   }
 
   function randomMessage() {
-    var types = ["time", "price-drop", "inventory-status", "number", "date"];
+    var types = ['time', 'price-drop', 'inventory-status', 'number', 'date'];
     return messages[types[Math.floor(Math.random() * types.length)]]();
   }
 
@@ -65,7 +67,8 @@ exports.init = function () {
       if (socket.readyState === WebSocket.OPEN) {
         var message = randomMessage();
         socket.send(JSON.stringify(message));
-        console.log(message);
+        // console.log(message);
+        console.log('.');
         looptyloo(socket);
       } else if (socket.readyState === WebSocket.CLOSED){
         console.log('Web Socket Disconnected');
@@ -76,15 +79,15 @@ exports.init = function () {
 
   testSocket.on('connection', function connected (socket) {
 
-    console.log("Web Socket Connected.");
+    console.log('Web Socket 4014 Connected.');
 
     looptyloo(socket);
 
-    testSocket.on('message', function (message) {
+    socket.on('message', function (message) {
       console.log('received: %s', message);
     });
   });
 
-  console.log('Socket listening on port ' + port);
+  console.log('Random Messages listening on port ' + port);
 
 }
