@@ -7,12 +7,21 @@ exports.init = function () {
   var WebSocket = require('ws')
     , Web_socket_server = WebSocket.Server
     , port = 4016
-    , wss = new Web_socket_server({port : port})
+    , wss = new Web_socket_server({port : port});
+
+  wss.broadcast = function(data) {
+    for (var i in this.clients) {
+      this.clients[i].send(data);
+    }
+  };
 
   wss.on('connection', function connected (socket) {
-    wss.broadcast('new connection');
+    // wss.broadcast('new connection');
     socket.on('message', function (message) {
-      console.log('received: %s', message);
+      if ('pong' !== message) {
+        console.log('received: %s', message);
+        wss.broadcast(message);
+      }
     });
   });
 

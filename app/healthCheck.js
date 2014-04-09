@@ -6,7 +6,7 @@ exports.init = function () {
   'use strict';
   var WebSocket = require('ws')
     , Web_socket_server = WebSocket.Server
-    , port = 4016
+    , port = 4015
     , testSocket = new Web_socket_server({port : port})
     , timer;
 
