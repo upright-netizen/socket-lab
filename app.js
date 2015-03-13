@@ -9,11 +9,12 @@ var express = require('express')
   , socket4014 = require(__dirname + '/app/randomMessages')
   , socket4015 = require(__dirname + '/app/healthCheck')
   , broadcaster = require(__dirname + '/app/broadcast.js')
+  , troubleMaker = require(__dirname + '/app/trouble_maker.js')
 
   socket4014.init();
   socket4015.init();
-
   broadcaster.init();
+  troubleMaker.init();
 
 app.configure(function () {
   app.set('view options', { layout: false});
