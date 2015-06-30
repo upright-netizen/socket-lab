@@ -68,4 +68,5 @@ exports.init = function () {
 
   console.log('Socket listening on port ' + port);
 
+  return testSocket;
 }
